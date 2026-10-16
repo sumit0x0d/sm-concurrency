@@ -8,31 +8,12 @@
 
 SM_Boolean sm_mutex_create(SM_Mutex *this)
 {
-#ifndef _WIN32
-   pthread_mutexattr_t attribute;
-#endif
-
 #ifdef _WIN32
    if (!InitializeCriticalSectionAndSpinCount(this, 0)) {
       return SM_BOOLEAN_FALSE;
    }
 #else
-   if (pthread_mutexattr_init(&attribute)) {
-      return SM_BOOLEAN_FALSE;
-   }
-
-   if (pthread_mutexattr_settype(&attribute, PTHREAD_MUTEX_RECURSIVE)) {
-      pthread_mutexattr_destroy(&attribute);
-      return SM_BOOLEAN_FALSE;
-   }
-
-   if (pthread_mutex_init(this, &attribute)) {
-      pthread_mutexattr_destroy(&attribute);
-      return SM_BOOLEAN_FALSE;
-   }
-
-   if (pthread_mutexattr_destroy(&attribute)) {
-      pthread_mutex_destroy(this);
+   if (pthread_mutex_init(this, NULL)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif

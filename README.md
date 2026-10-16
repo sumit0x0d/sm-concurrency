@@ -1,16 +1,27 @@
 # Concurrency Primitives (libsm-x)
 
-## Mutex lock
+## Mutex
 
-`sm-lock.h` exposes `sm_mutex_t` and the `sm_mutex_init`, `sm_mutex_lock`,
-`sm_mutex_try_lock`, `sm_mutex_unlock`, and `sm_mutex_destroy` functions. On
-Windows the implementation uses a `CRITICAL_SECTION`; on POSIX systems it
-uses a `pthread_mutex_t`.
+`sm-mutex.h` exposes `SM_Mutex` and the `sm_mutex_create`, `sm_mutex_lock`,
+`sm_mutex_try_lock`, `sm_mutex_unlock`, and `sm_mutex_destroy` functions.
+Initialize caller-owned storage before use, and destroy it only after no thread
+can access it. The mutex is nonrecursive. Functions return `SM_BOOLEAN_TRUE`
+on success and `SM_BOOLEAN_FALSE` on failure.
 
-Initialize a lock before using it and destroy it only after no thread can
-access it. The lock is recursive on both platforms, so the owning thread may
-acquire it more than once and must unlock it the same number of times. Each
-function returns `0` on success and a nonzero error code on failure.
-`sm_mutex_try_lock` returns `EBUSY` when another thread holds the lock. POSIX
-builds must link with the platform's pthread support (for example, `-pthread`
-with GCC or Clang).
+## Atomics
+
+`sm-atomic.h` provides 32-bit and 64-bit atomic values with create, load,
+store, exchange, compare-exchange, and fetch-add operations. Operations return
+an `SM_Boolean`; operations that produce a value write it through an output
+parameter. Compare-exchange updates its expected-value parameter with the
+observed value when the comparison fails. Operations use sequentially
+consistent ordering.
+
+## Barrier
+
+`sm-barrier.h` provides a reusable barrier. Initialize it with the number of
+participating threads; each thread calls `sm_barrier_wait` once per generation.
+Destroy the barrier only after all participating threads have left it.
+
+POSIX builds must link with the platform's pthread support (for example,
+`-pthread` with GCC or Clang).
