@@ -6,13 +6,13 @@
 
 #ifdef _WIN32
 #include <windows.h>
-typedef volatile LONG SM_Atomic_32;
-typedef LONG64 SM_Atomic_64_Value;
-typedef volatile LONG64 SM_Atomic_64;
+   typedef volatile LONG SM_Atomic_32;
+   typedef LONG64 SM_Atomic_64_Value;
+   typedef volatile LONG64 SM_Atomic_64;
 #else
-typedef volatile SM_Signed_32 SM_Atomic_32;
-typedef SM_Signed_64 SM_Atomic_64_Value;
-typedef volatile SM_Signed_64 SM_Atomic_64;
+   typedef volatile SM_Signed_32 SM_Atomic_32;
+   typedef SM_Signed_64 SM_Atomic_64_Value;
+   typedef volatile SM_Signed_64 SM_Atomic_64;
 #endif
 
 SM_API SM_Boolean sm_atomic_32_create(SM_Atomic_32 *this, SM_Signed_32 initial_value);
