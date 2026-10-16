@@ -21,29 +21,25 @@ endif()
 find_package(Threads REQUIRED)
 find_path(SM_CORE_INCLUDE_DIR
    NAMES sm-api.h
-   HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../sm-core/include"
-)
+   HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../sm-core/include")
 
 if(NOT SM_CORE_INCLUDE_DIR OR NOT EXISTS "${SM_CORE_INCLUDE_DIR}/sm-typedef.h")
-   message(FATAL_ERROR
-      "Could not find sm-api.h and sm-typedef.h. Set SM_CORE_INCLUDE_DIR to the sm-core include directory."
-   )
+   message(FATAL_ERROR "Could not find sm-api.h and sm-typedef.h. Set SM_CORE_INCLUDE_DIR to the sm-core include directory.")
 endif()
 
-add_library(sm-concurrency-primitives SHARED
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-atomic.c"
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-barrier.c"
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-condition-variable.c"
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-mutex.c"
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-read-write-lock.c"
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-semaphore.c"
-   "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-spinlock.c"
-)
+add_library(sm-concurrency-primitives
+   SHARED
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-atomic.c"
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-barrier.c"
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-condition-variable.c"
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-mutex.c"
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-read-write-lock.c"
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-semaphore.c"
+      "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-spinlock.c")
 target_include_directories(sm-concurrency-primitives
    PUBLIC
       include
-      "${SM_CORE_INCLUDE_DIR}"
-)
+      "${SM_CORE_INCLUDE_DIR}")
 target_link_libraries(sm-concurrency-primitives PUBLIC Threads::Threads)
 
 include(GNUInstallDirs)
@@ -51,8 +47,7 @@ include(GNUInstallDirs)
 install(TARGETS sm-concurrency-primitives
    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(DIRECTORY include/
    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
