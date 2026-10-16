@@ -2,28 +2,20 @@
 #define SM_MUTEX_H
 
 #include <sm-api.h>
+#include <sm-typedef.h>
 
 #ifdef _WIN32
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
-#include <windows.h>
+   #include <windows.h>
+   typedef CRITICAL_SECTION SM_Mutex;
 #else
-#include <pthread.h>
+   #include <pthread.h>
+   typedef pthread_mutex_t SM_Mutex;
 #endif
 
-typedef struct {
-#ifdef _WIN32
-    CRITICAL_SECTION native_lock;
-#else
-    pthread_mutex_t native_lock;
-#endif
-} SM_Mutex;
-
-SM_API SM_Mutex *sm_mutex_create(void);
-SM_API int sm_mutex_destroy(SM_Mutex *this);
-SM_API int sm_mutex_lock(SM_Mutex *this);
-SM_API int sm_mutex_try_lock(SM_Mutex *this);
-SM_API int sm_mutex_unlock(SM_Mutex *this);
+SM_API SM_Boolean sm_mutex_create(SM_Mutex *this);
+SM_API SM_Boolean sm_mutex_destroy(SM_Mutex *this);
+SM_API SM_Boolean sm_mutex_lock(SM_Mutex *this);
+SM_API SM_Boolean sm_mutex_try_lock(SM_Mutex *this);
+SM_API SM_Boolean sm_mutex_unlock(SM_Mutex *this);
 
 #endif
