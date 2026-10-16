@@ -1,7 +1,8 @@
 #include <sm-barrier.h>
 
 #include <assert.h>
-#include <pthread.h>
+
+#include "sm-test-thread.h"
 
 #define THREAD_COUNT 4
 #define ROUND_COUNT 10
@@ -24,7 +25,7 @@ static void *wait_at_barrier(void *argument)
 
 int main(void)
 {
-   pthread_t threads[THREAD_COUNT];
+   SM_Test_Thread threads[THREAD_COUNT];
    SM_Unsigned_32 index;
 
    assert(sm_barrier_create(&barrier, 0) == SM_BOOLEAN_FALSE);
@@ -32,10 +33,10 @@ int main(void)
 
    for (index = 0; index < THREAD_COUNT; index++) {
       completed_rounds[index] = 0;
-      assert(pthread_create(&threads[index], NULL, wait_at_barrier, (void *)(size_t)index) == 0);
+      assert(sm_test_thread_create(&threads[index], wait_at_barrier, (void *)(size_t)index) == SM_BOOLEAN_TRUE);
    }
    for (index = 0; index < THREAD_COUNT; index++) {
-      assert(pthread_join(threads[index], NULL) == 0);
+      assert(sm_test_thread_join(&threads[index]) == SM_BOOLEAN_TRUE);
       assert(completed_rounds[index] == ROUND_COUNT);
    }
 
