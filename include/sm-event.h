@@ -3,8 +3,6 @@
 
 #include <sm-api.h>
 #include <sm-typedef.h>
-#include <sm-condition-variable.h>
-#include <sm-mutex.h>
 
 typedef struct SM_Event SM_Event;
 

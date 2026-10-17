@@ -1,4 +1,6 @@
 #include <sm-event.h>
+#include <sm-condition-variable.h>
+#include <sm-mutex.h>
 
 struct SM_Event {
    SM_Mutex mutex;

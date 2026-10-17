@@ -23,4 +23,6 @@ SM_API SM_Boolean sm_condition_variable_broadcast(SM_Condition_Variable *this);
 
 SM_API SM_Boolean sm_condition_variable_wait(SM_Condition_Variable *this, SM_Mutex *mutex);
 
+SM_API SM_Boolean sm_condition_variable_timed_wait(SM_Condition_Variable *this, SM_Mutex *mutex, SM_Unsigned_32 millisecond);
+
 #endif

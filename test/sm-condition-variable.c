@@ -33,6 +33,10 @@ int main(void)
    assert(sm_mutex_unlock(&mutex) == SM_BOOLEAN_TRUE);
    assert(sm_test_thread_join(&thread) == SM_BOOLEAN_TRUE);
 
+   assert(sm_mutex_lock(&mutex) == SM_BOOLEAN_TRUE);
+   assert(sm_condition_variable_timed_wait(&condition, &mutex, 1) == SM_BOOLEAN_FALSE);
+   assert(sm_mutex_unlock(&mutex) == SM_BOOLEAN_TRUE);
+
    assert(sm_condition_variable_broadcast(&condition) == SM_BOOLEAN_TRUE);
    assert(sm_condition_variable_destroy(&condition) == SM_BOOLEAN_TRUE);
    assert(sm_mutex_destroy(&mutex) == SM_BOOLEAN_TRUE);

@@ -17,11 +17,8 @@ if(MSVC)
    add_compile_options(/W4 /WX)
 else()
    set(CMAKE_C_VISIBILITY_PRESET hidden)
-   add_compile_options(-Wall -Wextra -Werror -pedantic)
-endif()
-
-if(NOT WIN32)
    add_compile_definitions(_POSIX_C_SOURCE=200809L)
+   add_compile_options(-Wall -Wextra -Werror -pedantic)
 endif()
 
 find_package(Threads REQUIRED)
@@ -92,6 +89,10 @@ add_library(sm-thread SHARED "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-thread.c")
 target_include_directories(sm-thread PUBLIC ${SM_CONCURRENCY_INCLUDE_DIRS})
 target_link_libraries(sm-thread PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
+add_library(sm-thread-local SHARED "${CMAKE_CURRENT_SOURCE_DIR}/source/sm-thread-local.c")
+target_include_directories(sm-thread-local PUBLIC ${SM_CONCURRENCY_INCLUDE_DIRS})
+target_link_libraries(sm-thread-local PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+
 include(GNUInstallDirs)
 
 install(TARGETS
@@ -109,6 +110,7 @@ install(TARGETS
    sm-semaphore
    sm-spinlock
    sm-thread
+   sm-thread-local
    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -183,5 +185,9 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
       add_executable(sm-thread-test test/sm-thread.c)
       add_test(NAME sm-thread COMMAND sm-thread-test)
       target_link_libraries(sm-thread-test PRIVATE sm-thread sm-atomic-32)
+
+      add_executable(sm-thread-local-test test/sm-thread-local.c)
+      add_test(NAME sm-thread-local COMMAND sm-thread-local-test)
+      target_link_libraries(sm-thread-local-test PRIVATE sm-thread-local sm-thread)
    endif()
 endif()
