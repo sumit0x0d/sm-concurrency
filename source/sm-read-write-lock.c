@@ -1,9 +1,3 @@
-#ifndef _WIN32
-#ifndef _POSIX_C_SOURCE
-#define _POSIX_C_SOURCE 200809L
-#endif
-#endif
-
 #include <sm-read-write-lock.h>
 
 SM_Boolean sm_read_write_lock_create(SM_Read_Write_Lock *this)

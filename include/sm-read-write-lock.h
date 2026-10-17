@@ -1,12 +1,6 @@
 #ifndef SM_READ_WRITE_LOCK_H
 #define SM_READ_WRITE_LOCK_H
 
-#ifndef _WIN32
-#ifndef _POSIX_C_SOURCE
-#define _POSIX_C_SOURCE 200809L
-#endif
-#endif
-
 #include <sm-api.h>
 #include <sm-typedef.h>
 

@@ -1,9 +1,3 @@
-#ifndef _WIN32
-#ifndef _POSIX_C_SOURCE
-#define _POSIX_C_SOURCE 200809L
-#endif
-#endif
-
 #include <sm-mutex.h>
 
 SM_Boolean sm_mutex_create(SM_Mutex *this)

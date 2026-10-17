@@ -1,12 +1,6 @@
 #ifndef SM_SPINLOCK_H
 #define SM_SPINLOCK_H
 
-#ifndef _WIN32
-#ifndef _POSIX_C_SOURCE
-#define _POSIX_C_SOURCE 200809L
-#endif
-#endif
-
 #include <sm-api.h>
 #include <sm-typedef.h>
 

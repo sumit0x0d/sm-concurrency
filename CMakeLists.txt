@@ -20,6 +20,10 @@ else()
    add_compile_options(-Wall -Wextra -Werror -pedantic)
 endif()
 
+if(NOT WIN32)
+   add_compile_definitions(_POSIX_C_SOURCE=200809L)
+endif()
+
 find_package(Threads REQUIRED)
 
 set(SM_CONCURRENCY_INCLUDE_DIRS
