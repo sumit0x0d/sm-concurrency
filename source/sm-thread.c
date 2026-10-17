@@ -17,6 +17,7 @@ static DWORD WINAPI sm_thread_entry(LPVOID argument)
 
    thread = (SM_Thread *)argument;
    thread->context.result = thread->context.function(thread->context.argument);
+
    return 0;
 }
 #endif /* _WIN32 */
@@ -24,7 +25,7 @@ static DWORD WINAPI sm_thread_entry(LPVOID argument)
 SM_Boolean sm_thread_initialize(SM_Thread *this, SM_Thread_Function function, void *argument)
 {
 #ifdef _WIN32
-   if (this == NULL || function == NULL) {
+   if (function == NULL) {
       return SM_BOOLEAN_FALSE;
    }
 
@@ -50,7 +51,7 @@ SM_Boolean sm_thread_initialize(SM_Thread *this, SM_Thread_Function function, vo
 SM_Boolean sm_thread_join(SM_Thread *this, void **result)
 {
 #ifdef _WIN32
-   if (this == NULL || this->handle == NULL) {
+   if (this->handle == NULL) {
       return SM_BOOLEAN_FALSE;
    }
    if (WaitForSingleObject(this->handle, INFINITE) != WAIT_OBJECT_0) {
@@ -81,7 +82,7 @@ SM_Boolean sm_thread_join(SM_Thread *this, void **result)
 SM_Boolean sm_thread_detach(SM_Thread *this)
 {
 #ifdef _WIN32
-   if (this == NULL || this->handle == NULL) {
+   if (this->handle == NULL) {
       return SM_BOOLEAN_FALSE;
    }
    if (!CloseHandle(this->handle)) {

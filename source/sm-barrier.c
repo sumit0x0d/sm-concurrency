@@ -2,7 +2,7 @@
 
 SM_Boolean sm_barrier_initialize(SM_Barrier *this, SM_Unsigned_32 participant_count)
 {
-   if (this == NULL || participant_count == 0) {
+   if (participant_count == 0) {
       return SM_BOOLEAN_FALSE;
    }
 
@@ -25,10 +25,6 @@ SM_Boolean sm_barrier_initialize(SM_Barrier *this, SM_Unsigned_32 participant_co
 
 SM_Boolean sm_barrier_deinitialize(SM_Barrier *this)
 {
-   if (this == NULL) {
-      return SM_BOOLEAN_FALSE;
-   }
-
    if (!sm_mutex_lock(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
@@ -66,7 +62,7 @@ SM_Boolean sm_barrier_wait(SM_Barrier *this)
 {
    SM_Unsigned_32 generation;
 
-   if (this == NULL || !this->active) {
+   if (!this->active) {
       return SM_BOOLEAN_FALSE;
    }
 
