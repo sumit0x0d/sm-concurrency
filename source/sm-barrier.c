@@ -1,43 +1,61 @@
 #include <sm-barrier.h>
-#include <sm-condition-variable.h>
-#include <sm-mutex.h>
 
-struct SM_Barrier {
-   SM_Mutex mutex;
-   SM_Condition_Variable condition;
-   SM_Unsigned_32 participant_count;
-   SM_Unsigned_32 waiting_count;
-   SM_Unsigned_32 generation;
-};
-
-SM_Boolean sm_barrier_create(SM_Barrier *this, SM_Unsigned_32 participant_count)
+SM_Boolean sm_barrier_initialize(SM_Barrier *this, SM_Unsigned_32 participant_count)
 {
-   if (participant_count == 0) {
+   if (this == NULL || participant_count == 0) {
       return SM_BOOLEAN_FALSE;
    }
 
-   if (!sm_mutex_create(&this->mutex)) {
+   if (!sm_mutex_initialize(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
 
-   if (!sm_condition_variable_create(&this->condition)) {
-      sm_mutex_destroy(&this->mutex);
+   if (!sm_condition_variable_initialize(&this->condition)) {
+      sm_mutex_deinitialize(&this->mutex);
       return SM_BOOLEAN_FALSE;
    }
 
    this->participant_count = participant_count;
    this->waiting_count = 0;
    this->generation = 0;
+   this->active = SM_BOOLEAN_TRUE;
 
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_barrier_destroy(SM_Barrier *this)
+SM_Boolean sm_barrier_deinitialize(SM_Barrier *this)
 {
-   if (!sm_condition_variable_destroy(&this->condition)) {
+   if (this == NULL) {
       return SM_BOOLEAN_FALSE;
    }
-   if (!sm_mutex_destroy(&this->mutex)) {
+
+   if (!sm_mutex_lock(&this->mutex)) {
+      return SM_BOOLEAN_FALSE;
+   }
+
+   if (!this->active) {
+      sm_mutex_unlock(&this->mutex);
+      return SM_BOOLEAN_FALSE;
+   }
+
+   this->active = SM_BOOLEAN_FALSE;
+   this->waiting_count = 0;
+   this->generation++;
+
+   if (!sm_condition_variable_broadcast(&this->condition)) {
+      sm_mutex_unlock(&this->mutex);
+      return SM_BOOLEAN_FALSE;
+   }
+
+   if (!sm_mutex_unlock(&this->mutex)) {
+      return SM_BOOLEAN_FALSE;
+   }
+
+   if (!sm_condition_variable_deinitialize(&this->condition)) {
+      return SM_BOOLEAN_FALSE;
+   }
+
+   if (!sm_mutex_deinitialize(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
 
@@ -48,7 +66,16 @@ SM_Boolean sm_barrier_wait(SM_Barrier *this)
 {
    SM_Unsigned_32 generation;
 
+   if (this == NULL || !this->active) {
+      return SM_BOOLEAN_FALSE;
+   }
+
    if (!sm_mutex_lock(&this->mutex)) {
+      return SM_BOOLEAN_FALSE;
+   }
+
+   if (!this->active) {
+      sm_mutex_unlock(&this->mutex);
       return SM_BOOLEAN_FALSE;
    }
 
@@ -68,11 +95,16 @@ SM_Boolean sm_barrier_wait(SM_Barrier *this)
       return SM_BOOLEAN_TRUE;
    }
 
-   while (generation == this->generation) {
+   while (generation == this->generation && this->active) {
       if (!sm_condition_variable_wait(&this->condition, &this->mutex)) {
          sm_mutex_unlock(&this->mutex);
          return SM_BOOLEAN_FALSE;
       }
+   }
+
+   if (!this->active) {
+      sm_mutex_unlock(&this->mutex);
+      return SM_BOOLEAN_FALSE;
    }
 
    if (!sm_mutex_unlock(&this->mutex)) {

@@ -14,7 +14,7 @@ typedef volatile CHAR SM_Atomic_8;
 typedef volatile SM_Signed_8 SM_Atomic_8;
 #endif /* _WIN32 */
 
-SM_API void sm_atomic_8_create(SM_Atomic_8 *this, SM_Signed_8 initial_value);
+SM_API void sm_atomic_8_initialize(SM_Atomic_8 *this, SM_Signed_8 initial_value);
 
 SM_API void sm_atomic_8_load(SM_Atomic_8 *this, SM_Signed_8 *value);
 

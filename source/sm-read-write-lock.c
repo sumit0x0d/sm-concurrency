@@ -1,6 +1,6 @@
 #include <sm-read-write-lock.h>
 
-SM_Boolean sm_read_write_lock_create(SM_Read_Write_Lock *this)
+SM_Boolean sm_read_write_lock_initialize(SM_Read_Write_Lock *this)
 {
 #ifdef _WIN32
    InitializeSRWLock(this);
@@ -13,12 +13,12 @@ SM_Boolean sm_read_write_lock_create(SM_Read_Write_Lock *this)
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_read_write_lock_destroy(SM_Read_Write_Lock *this)
+SM_Boolean sm_read_write_lock_deinitialize(SM_Read_Write_Lock *this)
 {
 #ifdef _WIN32
    (void)this;
 #else
-   if (pthread_rwlock_destroy(this)) {
+   if (pthread_rwlock_deinitialize(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

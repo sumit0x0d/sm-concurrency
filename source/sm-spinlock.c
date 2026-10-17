@@ -1,6 +1,6 @@
 #include <sm-spinlock.h>
 
-SM_Boolean sm_spinlock_create(SM_Spinlock *this)
+SM_Boolean sm_spinlock_initialize(SM_Spinlock *this)
 {
 #ifdef _WIN32
    *this = 0;
@@ -13,12 +13,12 @@ SM_Boolean sm_spinlock_create(SM_Spinlock *this)
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_spinlock_destroy(SM_Spinlock *this)
+SM_Boolean sm_spinlock_deinitialize(SM_Spinlock *this)
 {
 #ifdef _WIN32
    (void)this;
 #else
-   if (pthread_spin_destroy(this)) {
+   if (pthread_spin_deinitialize(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

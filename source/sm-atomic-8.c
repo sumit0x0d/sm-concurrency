@@ -1,6 +1,6 @@
 #include <sm-atomic-8.h>
 
-void sm_atomic_8_create(SM_Atomic_8 *this, SM_Signed_8 initial_value)
+void sm_atomic_8_initialize(SM_Atomic_8 *this, SM_Signed_8 initial_value)
 {
 #ifdef _WIN32
    InterlockedExchange8(this, (CHAR)initial_value);

@@ -29,19 +29,19 @@ int main(void)
    SM_Signed_32 index;
 
    counter = 0;
-   assert(sm_spinlock_create(&spinlock) == SM_BOOLEAN_TRUE);
+   assert(sm_spinlock_initialize(&spinlock) == SM_BOOLEAN_TRUE);
    assert(sm_spinlock_try_lock(&spinlock) == SM_BOOLEAN_TRUE);
    assert(sm_spinlock_unlock(&spinlock) == SM_BOOLEAN_TRUE);
 
    for (index = 0; index < THREAD_COUNT; index++) {
-      assert(sm_test_thread_create(&threads[index], increment_counter, NULL) == SM_BOOLEAN_TRUE);
+      assert(sm_test_thread_initialize(&threads[index], increment_counter, NULL) == SM_BOOLEAN_TRUE);
    }
    for (index = 0; index < THREAD_COUNT; index++) {
       assert(sm_test_thread_join(&threads[index]) == SM_BOOLEAN_TRUE);
    }
 
    assert(counter == THREAD_COUNT * ITERATION_COUNT);
-   assert(sm_spinlock_destroy(&spinlock) == SM_BOOLEAN_TRUE);
+   assert(sm_spinlock_deinitialize(&spinlock) == SM_BOOLEAN_TRUE);
 
    return 0;
 }

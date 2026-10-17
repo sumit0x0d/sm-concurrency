@@ -21,16 +21,16 @@ int main(void)
    SM_Thread thread;
 
    main_value = 42;
-   assert(sm_thread_local_create(&thread_local) == SM_BOOLEAN_TRUE);
+   assert(sm_thread_local_initialize(&thread_local) == SM_BOOLEAN_TRUE);
    assert(sm_thread_local_get(&thread_local) == NULL);
 
-   assert(sm_thread_create(&thread, set_thread_local_value, &main_value) == SM_BOOLEAN_TRUE);
+   assert(sm_thread_initialize(&thread, set_thread_local_value, &main_value) == SM_BOOLEAN_TRUE);
    assert(sm_thread_join(&thread, NULL) == SM_BOOLEAN_TRUE);
 
    assert(sm_thread_local_get(&thread_local) == NULL);
    assert(sm_thread_local_set(&thread_local, &main_value) == SM_BOOLEAN_TRUE);
    assert(sm_thread_local_get(&thread_local) == &main_value);
 
-   assert(sm_thread_local_destroy(&thread_local) == SM_BOOLEAN_TRUE);
+   assert(sm_thread_local_deinitialize(&thread_local) == SM_BOOLEAN_TRUE);
    return 0;
 }

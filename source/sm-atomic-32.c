@@ -1,6 +1,6 @@
 #include <sm-atomic-32.h>
 
-void sm_atomic_32_create(SM_Atomic_32 *this, SM_Signed_32 initial_value)
+void sm_atomic_32_initialize(SM_Atomic_32 *this, SM_Signed_32 initial_value)
 {
 #ifdef _WIN32
    InterlockedExchange(this, (LONG)initial_value);

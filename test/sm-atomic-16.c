@@ -9,7 +9,7 @@ int main(void)
    SM_Signed_16 expected;
    SM_Signed_16 previous;
 
-   sm_atomic_16_create(&atomic, 1000);
+   sm_atomic_16_initialize(&atomic, 1000);
    sm_atomic_16_load(&atomic, &value);
    assert(value == 1000);
    sm_atomic_16_store(&atomic, 2000);

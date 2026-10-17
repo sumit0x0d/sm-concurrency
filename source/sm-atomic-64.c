@@ -1,6 +1,6 @@
 #include <sm-atomic-64.h>
 
-void sm_atomic_64_create(SM_Atomic_64 *this, SM_Atomic_64_Value initial_value)
+void sm_atomic_64_initialize(SM_Atomic_64 *this, SM_Atomic_64_Value initial_value)
 {
 #ifdef _WIN32
    InterlockedExchange64(this, initial_value);

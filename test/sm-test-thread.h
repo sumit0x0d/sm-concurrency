@@ -21,7 +21,7 @@ static DWORD WINAPI sm_test_thread_entry(LPVOID argument)
    return 0;
 }
 
-static SM_Boolean sm_test_thread_create(
+static SM_Boolean sm_test_thread_initialize(
    SM_Test_Thread *thread,
    void *(*function)(void *),
    void *argument
@@ -29,7 +29,7 @@ static SM_Boolean sm_test_thread_create(
 {
    thread->function = function;
    thread->argument = argument;
-   thread->handle = CreateThread(NULL, 0, sm_test_thread_entry, thread, 0, NULL);
+   thread->handle = initializeThread(NULL, 0, sm_test_thread_entry, thread, 0, NULL);
    if (thread->handle == NULL) {
       return SM_BOOLEAN_FALSE;
    }
@@ -51,13 +51,13 @@ static SM_Boolean sm_test_thread_join(SM_Test_Thread *thread)
 
 typedef pthread_t SM_Test_Thread;
 
-static SM_Boolean sm_test_thread_create(
+static SM_Boolean sm_test_thread_initialize(
    SM_Test_Thread *thread,
    void *(*function)(void *),
    void *argument
 )
 {
-   if (pthread_create(thread, NULL, function, argument)) {
+   if (pthread_initialize(thread, NULL, function, argument)) {
       return SM_BOOLEAN_FALSE;
    }
    return SM_BOOLEAN_TRUE;

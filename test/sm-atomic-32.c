@@ -9,7 +9,7 @@ int main(void)
    SM_Signed_32 expected;
    SM_Signed_32 previous;
 
-   sm_atomic_32_create(&atomic, 10);
+   sm_atomic_32_initialize(&atomic, 10);
    sm_atomic_32_load(&atomic, &value);
    assert(value == 10);
    sm_atomic_32_store(&atomic, 20);

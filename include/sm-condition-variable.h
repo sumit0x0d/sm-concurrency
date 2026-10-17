@@ -17,9 +17,9 @@ typedef CONDITION_VARIABLE SM_Condition_Variable;
 typedef pthread_cond_t SM_Condition_Variable;
 #endif /* _WIN32 */
 
-SM_API SM_Boolean sm_condition_variable_create(SM_Condition_Variable *this);
+SM_API SM_Boolean sm_condition_variable_initialize(SM_Condition_Variable *this);
 
-SM_API SM_Boolean sm_condition_variable_destroy(SM_Condition_Variable *this);
+SM_API SM_Boolean sm_condition_variable_deinitialize(SM_Condition_Variable *this);
 
 SM_API SM_Boolean sm_condition_variable_signal(SM_Condition_Variable *this);
 

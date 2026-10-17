@@ -14,7 +14,7 @@ typedef volatile LONG SM_Atomic_32;
 typedef volatile SM_Signed_32 SM_Atomic_32;
 #endif /* _WIN32 */
 
-SM_API void sm_atomic_32_create(SM_Atomic_32 *this, SM_Signed_32 initial_value);
+SM_API void sm_atomic_32_initialize(SM_Atomic_32 *this, SM_Signed_32 initial_value);
 
 SM_API void sm_atomic_32_load(SM_Atomic_32 *this, SM_Signed_32 *value);
 

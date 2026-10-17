@@ -16,7 +16,7 @@ typedef SM_Signed_64 SM_Atomic_64_Value;
 typedef volatile SM_Signed_64 SM_Atomic_64;
 #endif /* _WIN32 */
 
-SM_API void sm_atomic_64_create(SM_Atomic_64 *this, SM_Atomic_64_Value initial_value);
+SM_API void sm_atomic_64_initialize(SM_Atomic_64 *this, SM_Atomic_64_Value initial_value);
 
 SM_API void sm_atomic_64_load(SM_Atomic_64 *this, SM_Atomic_64_Value *value);
 

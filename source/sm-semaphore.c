@@ -2,14 +2,14 @@
 
 #include <sm-semaphore.h>
 
-SM_Boolean sm_semaphore_create(SM_Semaphore *this, SM_Unsigned_32 initial_value)
+SM_Boolean sm_semaphore_initialize(SM_Semaphore *this, SM_Unsigned_32 initial_value)
 {
 #ifdef _WIN32
    if (initial_value > (SM_Unsigned_32)LONG_MAX) {
       return SM_BOOLEAN_FALSE;
    }
 
-   *this = CreateSemaphore(NULL, (LONG)initial_value, LONG_MAX, NULL);
+   *this = initializeSemaphore(NULL, (LONG)initial_value, LONG_MAX, NULL);
    if (*this == NULL) {
       return SM_BOOLEAN_FALSE;
    }
@@ -22,14 +22,14 @@ SM_Boolean sm_semaphore_create(SM_Semaphore *this, SM_Unsigned_32 initial_value)
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_semaphore_destroy(SM_Semaphore *this)
+SM_Boolean sm_semaphore_deinitialize(SM_Semaphore *this)
 {
 #ifdef _WIN32
    if (!CloseHandle(*this)) {
       return SM_BOOLEAN_FALSE;
    }
 #else
-   if (sem_destroy(this)) {
+   if (sem_deinitialize(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

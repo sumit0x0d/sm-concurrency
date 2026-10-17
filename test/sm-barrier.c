@@ -28,19 +28,19 @@ int main(void)
    SM_Test_Thread threads[THREAD_COUNT];
    SM_Unsigned_32 index;
 
-   assert(sm_barrier_create(&barrier, 0) == SM_BOOLEAN_FALSE);
-   assert(sm_barrier_create(&barrier, THREAD_COUNT) == SM_BOOLEAN_TRUE);
+   assert(sm_barrier_initialize(&barrier, 0) == SM_BOOLEAN_FALSE);
+   assert(sm_barrier_initialize(&barrier, THREAD_COUNT) == SM_BOOLEAN_TRUE);
 
    for (index = 0; index < THREAD_COUNT; index++) {
       completed_rounds[index] = 0;
-      assert(sm_test_thread_create(&threads[index], wait_at_barrier, (void *)(size_t)index) == SM_BOOLEAN_TRUE);
+      assert(sm_test_thread_initialize(&threads[index], wait_at_barrier, (void *)(size_t)index) == SM_BOOLEAN_TRUE);
    }
    for (index = 0; index < THREAD_COUNT; index++) {
       assert(sm_test_thread_join(&threads[index]) == SM_BOOLEAN_TRUE);
       assert(completed_rounds[index] == ROUND_COUNT);
    }
 
-   assert(sm_barrier_destroy(&barrier) == SM_BOOLEAN_TRUE);
+   assert(sm_barrier_deinitialize(&barrier) == SM_BOOLEAN_TRUE);
 
    return 0;
 }

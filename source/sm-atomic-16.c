@@ -1,6 +1,6 @@
 #include <sm-atomic-16.h>
 
-void sm_atomic_16_create(SM_Atomic_16 *this, SM_Signed_16 initial_value)
+void sm_atomic_16_initialize(SM_Atomic_16 *this, SM_Signed_16 initial_value)
 {
 #ifdef _WIN32
    InterlockedExchange16(this, (SHORT)initial_value);

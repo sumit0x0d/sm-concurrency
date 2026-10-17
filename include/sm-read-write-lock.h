@@ -11,14 +11,14 @@
 #include <sm-typedef.h>
 
 #ifdef _WIN32
-   typedef SRWLOCK SM_Read_Write_Lock;
+typedef SRWLOCK SM_Read_Write_Lock;
 #else
-   typedef pthread_rwlock_t SM_Read_Write_Lock;
+typedef pthread_rwlock_t SM_Read_Write_Lock;
 #endif /* _WIN32 */
 
-SM_API SM_Boolean sm_read_write_lock_create(SM_Read_Write_Lock *this);
+SM_API SM_Boolean sm_read_write_lock_initialize(SM_Read_Write_Lock *this);
 
-SM_API SM_Boolean sm_read_write_lock_destroy(SM_Read_Write_Lock *this);
+SM_API SM_Boolean sm_read_write_lock_deinitialize(SM_Read_Write_Lock *this);
 
 SM_API SM_Boolean sm_read_write_lock_read_lock(SM_Read_Write_Lock *this);
 

@@ -1,25 +1,17 @@
-#include <sm-condition-variable.h>
 #include <sm-event.h>
-#include <sm-mutex.h>
 
-struct SM_Event {
-   SM_Mutex mutex;
-   SM_Condition_Variable condition;
-   SM_Boolean signaled;
-};
-
-SM_Boolean sm_event_create(SM_Event *this, SM_Boolean initially_signaled)
+SM_Boolean sm_event_initialize(SM_Event *this, SM_Boolean initially_signaled)
 {
    if (initially_signaled != SM_BOOLEAN_FALSE && initially_signaled != SM_BOOLEAN_TRUE) {
       return SM_BOOLEAN_FALSE;
    }
    
-   if (!sm_mutex_create(&this->mutex)) {
+   if (!sm_mutex_initialize(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
    
-   if (!sm_condition_variable_create(&this->condition)) {
-      sm_mutex_destroy(&this->mutex);
+   if (!sm_condition_variable_initialize(&this->condition)) {
+      sm_mutex_deinitialize(&this->mutex);
       return SM_BOOLEAN_FALSE;
    }
    
@@ -28,13 +20,13 @@ SM_Boolean sm_event_create(SM_Event *this, SM_Boolean initially_signaled)
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_event_destroy(SM_Event *this)
+SM_Boolean sm_event_deinitialize(SM_Event *this)
 {
-   if (!sm_condition_variable_destroy(&this->condition)) {
+   if (!sm_condition_variable_deinitialize(&this->condition)) {
       return SM_BOOLEAN_FALSE;
    }
    
-   if (!sm_mutex_destroy(&this->mutex)) {
+   if (!sm_mutex_deinitialize(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
 

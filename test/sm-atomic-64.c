@@ -9,7 +9,7 @@ int main(void)
    SM_Atomic_64_Value expected;
    SM_Atomic_64_Value previous;
 
-   sm_atomic_64_create(&atomic, 100);
+   sm_atomic_64_initialize(&atomic, 100);
    sm_atomic_64_load(&atomic, &value);
    assert(value == 100);
    sm_atomic_64_store(&atomic, 200);

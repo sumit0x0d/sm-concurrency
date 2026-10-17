@@ -1,20 +1,12 @@
-#include <sm-condition-variable.h>
 #include <sm-countdown-latch.h>
-#include <sm-mutex.h>
 
-struct SM_Countdown_Latch {
-   SM_Mutex mutex;
-   SM_Condition_Variable condition;
-   SM_Unsigned_32 count;
-};
-
-SM_Boolean sm_countdown_latch_create(SM_Countdown_Latch *this, SM_Unsigned_32 count)
+SM_Boolean sm_countdown_latch_initialize(SM_Countdown_Latch *this, SM_Unsigned_32 count)
 {
-   if (!sm_mutex_create(&this->mutex)) {
+   if (!sm_mutex_initialize(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
-   if (!sm_condition_variable_create(&this->condition)) {
-      sm_mutex_destroy(&this->mutex);
+   if (!sm_condition_variable_initialize(&this->condition)) {
+      sm_mutex_deinitialize(&this->mutex);
       return SM_BOOLEAN_FALSE;
    }
    this->count = count;
@@ -22,12 +14,12 @@ SM_Boolean sm_countdown_latch_create(SM_Countdown_Latch *this, SM_Unsigned_32 co
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_countdown_latch_destroy(SM_Countdown_Latch *this)
+SM_Boolean sm_countdown_latch_deinitialize(SM_Countdown_Latch *this)
 {
-   if (!sm_condition_variable_destroy(&this->condition)) {
+   if (!sm_condition_variable_deinitialize(&this->condition)) {
       return SM_BOOLEAN_FALSE;
    }
-   if (!sm_mutex_destroy(&this->mutex)) {
+   if (!sm_mutex_deinitialize(&this->mutex)) {
       return SM_BOOLEAN_FALSE;
    }
 

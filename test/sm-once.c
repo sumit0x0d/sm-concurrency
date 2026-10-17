@@ -27,7 +27,7 @@ int main(void)
 
    call_count = 0;
    for (index = 0; index < THREAD_COUNT; index++) {
-      assert(sm_thread_create(&threads[index], call_once, NULL) == SM_BOOLEAN_TRUE);
+      assert(sm_thread_initialize(&threads[index], call_once, NULL) == SM_BOOLEAN_TRUE);
    }
    for (index = 0; index < THREAD_COUNT; index++) {
       assert(sm_thread_join(&threads[index], NULL) == SM_BOOLEAN_TRUE);

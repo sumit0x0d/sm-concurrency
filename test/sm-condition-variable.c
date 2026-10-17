@@ -23,10 +23,10 @@ int main(void)
    SM_Test_Thread thread;
 
    ready = 0;
-   assert(sm_mutex_create(&mutex) == SM_BOOLEAN_TRUE);
-   assert(sm_condition_variable_create(&condition) == SM_BOOLEAN_TRUE);
+   assert(sm_mutex_initialize(&mutex) == SM_BOOLEAN_TRUE);
+   assert(sm_condition_variable_initialize(&condition) == SM_BOOLEAN_TRUE);
    assert(sm_mutex_lock(&mutex) == SM_BOOLEAN_TRUE);
-   assert(sm_test_thread_create(&thread, signal_when_ready, NULL) == SM_BOOLEAN_TRUE);
+   assert(sm_test_thread_initialize(&thread, signal_when_ready, NULL) == SM_BOOLEAN_TRUE);
    while (!ready) {
       assert(sm_condition_variable_wait(&condition, &mutex) == SM_BOOLEAN_TRUE);
    }
@@ -38,8 +38,8 @@ int main(void)
    assert(sm_mutex_unlock(&mutex) == SM_BOOLEAN_TRUE);
 
    assert(sm_condition_variable_broadcast(&condition) == SM_BOOLEAN_TRUE);
-   assert(sm_condition_variable_destroy(&condition) == SM_BOOLEAN_TRUE);
-   assert(sm_mutex_destroy(&mutex) == SM_BOOLEAN_TRUE);
+   assert(sm_condition_variable_deinitialize(&condition) == SM_BOOLEAN_TRUE);
+   assert(sm_mutex_deinitialize(&mutex) == SM_BOOLEAN_TRUE);
 
    return 0;
 }

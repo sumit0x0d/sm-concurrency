@@ -16,9 +16,9 @@ typedef volatile LONG SM_Spinlock;
 typedef pthread_spinlock_t SM_Spinlock;
 #endif /* _WIN32 */
 
-SM_API SM_Boolean sm_spinlock_create(SM_Spinlock *this);
+SM_API SM_Boolean sm_spinlock_initialize(SM_Spinlock *this);
 
-SM_API SM_Boolean sm_spinlock_destroy(SM_Spinlock *this);
+SM_API SM_Boolean sm_spinlock_deinitialize(SM_Spinlock *this);
 
 SM_API SM_Boolean sm_spinlock_lock(SM_Spinlock *this);
 

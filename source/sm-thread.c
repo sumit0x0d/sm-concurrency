@@ -11,53 +11,31 @@
 #define SM_THREAD_REFERENCE_COUNT 2U
 
 #ifdef _WIN32
-struct SM_Thread {
-   HANDLE handle;
-   void *context;
-};
-
-typedef struct SM_Thread_Context {
-   SM_Thread_Function function;
-   void *argument;
-   void *result;
-   volatile LONG references;
-} SM_Thread_Context;
-
-static void sm_thread_context_release(SM_Thread_Context *context)
-{
-   if (InterlockedDecrement(&context->references) == 0) {
-      HeapFree(GetProcessHeap(), 0, context);
-   }
-}
-
 static DWORD WINAPI sm_thread_entry(LPVOID argument)
 {
-   SM_Thread_Context *context;
+   SM_Thread *thread;
 
-   context = (SM_Thread_Context *)argument;
-   context->result = context->function(context->argument);
-   sm_thread_context_release(context);
+   thread = (SM_Thread *)argument;
+   thread->context.result = thread->context.function(thread->context.argument);
    return 0;
 }
 #endif /* _WIN32 */
 
-SM_Boolean sm_thread_create(SM_Thread *this, SM_Thread_Function function, void *argument)
+SM_Boolean sm_thread_initialize(SM_Thread *this, SM_Thread_Function function, void *argument)
 {
 #ifdef _WIN32
-   SM_Thread_Context *context;
-
-   context = (SM_Thread_Context *)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(SM_Thread_Context));
-   if (context == NULL) {
+   if (this == NULL || function == NULL) {
       return SM_BOOLEAN_FALSE;
    }
-   context->function = function;
-   context->argument = argument;
-   context->references = SM_THREAD_REFERENCE_COUNT;
-   this->context = context;
-   this->handle = CreateThread(NULL, 0, sm_thread_entry, context, 0, NULL);
+
+   this->context.function = function;
+   this->context.argument = argument;
+   this->context.result = NULL;
+   this->handle = CreateThread(NULL, 0, sm_thread_entry, this, 0, NULL);
    if (this->handle == NULL) {
-      HeapFree(GetProcessHeap(), 0, context);
-      this->context = NULL;
+      this->context.function = NULL;
+      this->context.argument = NULL;
+      this->context.result = NULL;
       return SM_BOOLEAN_FALSE;
    }
 #else
@@ -72,21 +50,25 @@ SM_Boolean sm_thread_create(SM_Thread *this, SM_Thread_Function function, void *
 SM_Boolean sm_thread_join(SM_Thread *this, void **result)
 {
 #ifdef _WIN32
-   SM_Thread_Context *context;
-
+   if (this == NULL || this->handle == NULL) {
+      return SM_BOOLEAN_FALSE;
+   }
    if (WaitForSingleObject(this->handle, INFINITE) != WAIT_OBJECT_0) {
       return SM_BOOLEAN_FALSE;
    }
-   context = (SM_Thread_Context *)this->context;
+
    if (result != NULL) {
-      *result = context->result;
+      *result = this->context.result;
    }
+
    if (!CloseHandle(this->handle)) {
       return SM_BOOLEAN_FALSE;
    }
-   sm_thread_context_release(context);
+
    this->handle = NULL;
-   this->context = NULL;
+   this->context.function = NULL;
+   this->context.argument = NULL;
+   this->context.result = NULL;
 #else
    if (pthread_join(*this, result)) {
       return SM_BOOLEAN_FALSE;
@@ -99,16 +81,17 @@ SM_Boolean sm_thread_join(SM_Thread *this, void **result)
 SM_Boolean sm_thread_detach(SM_Thread *this)
 {
 #ifdef _WIN32
-   SM_Thread_Context *context;
-
+   if (this == NULL || this->handle == NULL) {
+      return SM_BOOLEAN_FALSE;
+   }
    if (!CloseHandle(this->handle)) {
       return SM_BOOLEAN_FALSE;
    }
 
-   context = (SM_Thread_Context *)this->context;
-   sm_thread_context_release(context);
    this->handle = NULL;
-   this->context = NULL;
+   this->context.function = NULL;
+   this->context.argument = NULL;
+   this->context.result = NULL;
 #else
    if (pthread_detach(*this)) {
       return SM_BOOLEAN_FALSE;

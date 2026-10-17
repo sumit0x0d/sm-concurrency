@@ -29,19 +29,19 @@ int main(void)
    SM_Signed_32 index;
 
    counter = 0;
-   assert(sm_mutex_create(&mutex) == SM_BOOLEAN_TRUE);
+   assert(sm_mutex_initialize(&mutex) == SM_BOOLEAN_TRUE);
    assert(sm_mutex_try_lock(&mutex) == SM_BOOLEAN_TRUE);
    assert(sm_mutex_unlock(&mutex) == SM_BOOLEAN_TRUE);
 
    for (index = 0; index < THREAD_COUNT; index++) {
-      assert(sm_test_thread_create(&threads[index], increment_counter, NULL) == SM_BOOLEAN_TRUE);
+      assert(sm_test_thread_initialize(&threads[index], increment_counter, NULL) == SM_BOOLEAN_TRUE);
    }
    for (index = 0; index < THREAD_COUNT; index++) {
       assert(sm_test_thread_join(&threads[index]) == SM_BOOLEAN_TRUE);
    }
 
    assert(counter == THREAD_COUNT * ITERATION_COUNT);
-   assert(sm_mutex_destroy(&mutex) == SM_BOOLEAN_TRUE);
+   assert(sm_mutex_deinitialize(&mutex) == SM_BOOLEAN_TRUE);
 
    return 0;
 }

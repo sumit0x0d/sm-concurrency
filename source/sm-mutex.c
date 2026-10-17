@@ -1,6 +1,6 @@
 #include <sm-mutex.h>
 
-SM_Boolean sm_mutex_create(SM_Mutex *this)
+SM_Boolean sm_mutex_initialize(SM_Mutex *this)
 {
 #ifdef _WIN32
    if (!InitializeCriticalSectionAndSpinCount(this, 0)) {
@@ -15,12 +15,12 @@ SM_Boolean sm_mutex_create(SM_Mutex *this)
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_mutex_destroy(SM_Mutex *this)
+SM_Boolean sm_mutex_deinitialize(SM_Mutex *this)
 {
 #ifdef _WIN32
    DeleteCriticalSection(this);
 #else
-   if (pthread_mutex_destroy(this)) {
+   if (pthread_mutex_deinitialize(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

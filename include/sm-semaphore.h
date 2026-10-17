@@ -16,9 +16,9 @@ typedef HANDLE SM_Semaphore;
 typedef sem_t SM_Semaphore;
 #endif /* _WIN32 */
 
-SM_API SM_Boolean sm_semaphore_create(SM_Semaphore *this, SM_Unsigned_32 initial_value);
+SM_API SM_Boolean sm_semaphore_initialize(SM_Semaphore *this, SM_Unsigned_32 initial_value);
 
-SM_API SM_Boolean sm_semaphore_destroy(SM_Semaphore *this);
+SM_API SM_Boolean sm_semaphore_deinitialize(SM_Semaphore *this);
 
 SM_API SM_Boolean sm_semaphore_wait(SM_Semaphore *this);
 

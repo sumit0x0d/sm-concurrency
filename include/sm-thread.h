@@ -10,15 +10,24 @@
 #include <sm-api.h>
 #include <sm-typedef.h>
 
+typedef void *(*SM_Thread_Function)(void *);
+
 #ifdef _WIN32
-typedef struct SM_Thread SM_Thread;
+typedef struct SM_Thread_Context {
+   SM_Thread_Function function;
+   void *argument;
+   void *result;
+} SM_Thread_Context;
+
+typedef struct SM_Thread {
+   HANDLE handle;
+   SM_Thread_Context context;
+} SM_Thread;
 #else
 typedef pthread_t SM_Thread;
 #endif /* _WIN32 */
 
-typedef void *(*SM_Thread_Function)(void *);
-
-SM_API SM_Boolean sm_thread_create(SM_Thread *this, SM_Thread_Function function, void *argument);
+SM_API SM_Boolean sm_thread_initialize(SM_Thread *this, SM_Thread_Function function, void *argument);
 
 SM_API SM_Boolean sm_thread_join(SM_Thread *this, void **result);
 

@@ -5,7 +5,7 @@
 
 #include <sm-condition-variable.h>
 
-SM_Boolean sm_condition_variable_create(SM_Condition_Variable *this)
+SM_Boolean sm_condition_variable_initialize(SM_Condition_Variable *this)
 {
 #ifdef _WIN32
    InitializeConditionVariable(this);
@@ -18,12 +18,12 @@ SM_Boolean sm_condition_variable_create(SM_Condition_Variable *this)
    return SM_BOOLEAN_TRUE;
 }
 
-SM_Boolean sm_condition_variable_destroy(SM_Condition_Variable *this)
+SM_Boolean sm_condition_variable_deinitialize(SM_Condition_Variable *this)
 {
 #ifdef _WIN32
    (void)this;
 #else
-   if (pthread_cond_destroy(this)) {
+   if (pthread_cond_deinitialize(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

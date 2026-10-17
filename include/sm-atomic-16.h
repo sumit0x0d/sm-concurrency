@@ -14,7 +14,7 @@ typedef volatile SHORT SM_Atomic_16;
 typedef volatile SM_Signed_16 SM_Atomic_16;
 #endif /* _WIN32 */
 
-SM_API void sm_atomic_16_create(SM_Atomic_16 *this, SM_Signed_16 initial_value);
+SM_API void sm_atomic_16_initialize(SM_Atomic_16 *this, SM_Signed_16 initial_value);
 
 SM_API void sm_atomic_16_load(SM_Atomic_16 *this, SM_Signed_16 *value);
 
