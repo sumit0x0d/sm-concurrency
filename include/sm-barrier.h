@@ -3,16 +3,8 @@
 
 #include <sm-api.h>
 #include <sm-typedef.h>
-#include <sm-condition-variable.h>
-#include <sm-mutex.h>
 
-typedef struct {
-   SM_Mutex mutex;
-   SM_Condition_Variable condition;
-   SM_Unsigned_32 participant_count;
-   SM_Unsigned_32 waiting_count;
-   SM_Unsigned_32 generation;
-} SM_Barrier;
+typedef struct SM_Barrier SM_Barrier;
 
 SM_API SM_Boolean sm_barrier_create(SM_Barrier *this, SM_Unsigned_32 participant_count);
 

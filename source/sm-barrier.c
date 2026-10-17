@@ -1,5 +1,16 @@
 #include <sm-barrier.h>
 
+#include <sm-condition-variable.h>
+#include <sm-mutex.h>
+
+struct SM_Barrier {
+   SM_Mutex mutex;
+   SM_Condition_Variable condition;
+   SM_Unsigned_32 participant_count;
+   SM_Unsigned_32 waiting_count;
+   SM_Unsigned_32 generation;
+};
+
 SM_Boolean sm_barrier_create(SM_Barrier *this, SM_Unsigned_32 participant_count)
 {
    if (participant_count == 0) {
