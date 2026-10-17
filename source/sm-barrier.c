@@ -1,5 +1,4 @@
 #include <sm-barrier.h>
-
 #include <sm-condition-variable.h>
 #include <sm-mutex.h>
 

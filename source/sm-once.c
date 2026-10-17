@@ -15,7 +15,7 @@ static BOOL CALLBACK sm_once_entry(PINIT_ONCE once, PVOID parameter, PVOID *cont
    once_context->function();
    return TRUE;
 }
-#endif
+#endif /* _WIN32 */
 
 SM_Boolean sm_once(SM_Once *this, SM_Once_Function function)
 {
@@ -30,7 +30,7 @@ SM_Boolean sm_once(SM_Once *this, SM_Once_Function function)
    if (pthread_once(this, function)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }

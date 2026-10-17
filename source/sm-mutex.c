@@ -10,7 +10,7 @@ SM_Boolean sm_mutex_create(SM_Mutex *this)
    if (pthread_mutex_init(this, NULL)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -23,7 +23,7 @@ SM_Boolean sm_mutex_destroy(SM_Mutex *this)
    if (pthread_mutex_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -36,7 +36,7 @@ SM_Boolean sm_mutex_lock(SM_Mutex *this)
    if (pthread_mutex_lock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -51,7 +51,7 @@ SM_Boolean sm_mutex_try_lock(SM_Mutex *this)
    if (pthread_mutex_trylock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -64,7 +64,7 @@ SM_Boolean sm_mutex_unlock(SM_Mutex *this)
    if (pthread_mutex_unlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }

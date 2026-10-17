@@ -1,5 +1,5 @@
-#include <sm-event.h>
 #include <sm-condition-variable.h>
+#include <sm-event.h>
 #include <sm-mutex.h>
 
 struct SM_Event {

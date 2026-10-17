@@ -16,4 +16,4 @@ SM_API SM_Boolean sm_event_reset(SM_Event *this);
 
 SM_API SM_Boolean sm_event_wait(SM_Event *this);
 
-#endif
+#endif /* SM_EVENT_H */

@@ -1,9 +1,9 @@
-#include <sm-condition-variable.h>
-
 #ifndef _WIN32
 #include <errno.h>
 #include <time.h>
-#endif
+#endif /* !_WIN32 */
+
+#include <sm-condition-variable.h>
 
 SM_Boolean sm_condition_variable_create(SM_Condition_Variable *this)
 {
@@ -13,7 +13,7 @@ SM_Boolean sm_condition_variable_create(SM_Condition_Variable *this)
    if (pthread_cond_init(this, NULL)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -26,7 +26,7 @@ SM_Boolean sm_condition_variable_destroy(SM_Condition_Variable *this)
    if (pthread_cond_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -39,7 +39,7 @@ SM_Boolean sm_condition_variable_signal(SM_Condition_Variable *this)
    if (pthread_cond_signal(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -52,7 +52,7 @@ SM_Boolean sm_condition_variable_broadcast(SM_Condition_Variable *this)
    if (pthread_cond_broadcast(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -67,7 +67,7 @@ SM_Boolean sm_condition_variable_wait(SM_Condition_Variable *this, SM_Mutex *mut
    if (pthread_cond_wait(this, mutex)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -102,7 +102,7 @@ SM_Boolean sm_condition_variable_timed_wait(SM_Condition_Variable *this, SM_Mute
       }
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }

@@ -1,23 +1,22 @@
 #ifndef SM_THREAD_H
 #define SM_THREAD_H
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <pthread.h>
+#endif /* _WIN32 */
+
 #include <sm-api.h>
 #include <sm-typedef.h>
 
-typedef void *(*SM_Thread_Function)(void *);
-
 #ifdef _WIN32
-#include <windows.h>
-
-typedef struct SM_Thread {
-   HANDLE handle;
-   void *context;
-} SM_Thread;
+typedef struct SM_Thread SM_Thread;
 #else
-#include <pthread.h>
-
 typedef pthread_t SM_Thread;
-#endif
+#endif /* _WIN32 */
+
+typedef void *(*SM_Thread_Function)(void *);
 
 SM_API SM_Boolean sm_thread_create(SM_Thread *this, SM_Thread_Function function, void *argument);
 
@@ -29,4 +28,4 @@ SM_API void sm_thread_yield(void);
 
 SM_API SM_Boolean sm_thread_sleep(SM_Unsigned_32 milliseconds);
 
-#endif
+#endif /* SM_THREAD_H */

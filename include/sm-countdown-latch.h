@@ -14,4 +14,4 @@ SM_API SM_Boolean sm_countdown_latch_count_down(SM_Countdown_Latch *this, SM_Uns
 
 SM_API SM_Boolean sm_countdown_latch_wait(SM_Countdown_Latch *this);
 
-#endif
+#endif /* SM_COUNTDOWN_LATCH_H */

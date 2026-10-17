@@ -70,6 +70,6 @@ static SM_Boolean sm_test_thread_join(SM_Test_Thread *thread)
    }
    return SM_BOOLEAN_TRUE;
 }
-#endif
+#endif /* _WIN32 */
 
-#endif
+#endif /* SM_TEST_THREAD_H */

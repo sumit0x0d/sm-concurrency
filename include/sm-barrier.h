@@ -12,4 +12,4 @@ SM_API SM_Boolean sm_barrier_destroy(SM_Barrier *this);
 
 SM_API SM_Boolean sm_barrier_wait(SM_Barrier *this);
 
-#endif
+#endif /* SM_BARRIER_H */

@@ -1,5 +1,3 @@
-
-
 #include <limits.h>
 
 #include <sm-semaphore.h>
@@ -19,7 +17,7 @@ SM_Boolean sm_semaphore_create(SM_Semaphore *this, SM_Unsigned_32 initial_value)
    if (sem_init(this, 0, initial_value)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -34,7 +32,7 @@ SM_Boolean sm_semaphore_destroy(SM_Semaphore *this)
    if (sem_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -49,7 +47,7 @@ SM_Boolean sm_semaphore_wait(SM_Semaphore *this)
    if (sem_wait(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -64,7 +62,7 @@ SM_Boolean sm_semaphore_try_wait(SM_Semaphore *this)
    if (sem_trywait(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -79,7 +77,7 @@ SM_Boolean sm_semaphore_post(SM_Semaphore *this)
    if (sem_post(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }

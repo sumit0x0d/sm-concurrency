@@ -8,7 +8,7 @@ SM_Boolean sm_spinlock_create(SM_Spinlock *this)
    if (pthread_spin_init(this, PTHREAD_PROCESS_PRIVATE)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -21,7 +21,7 @@ SM_Boolean sm_spinlock_destroy(SM_Spinlock *this)
    if (pthread_spin_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -35,7 +35,7 @@ SM_Boolean sm_spinlock_lock(SM_Spinlock *this)
    if (pthread_spin_lock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -50,7 +50,7 @@ SM_Boolean sm_spinlock_try_lock(SM_Spinlock *this)
    if (pthread_spin_trylock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -63,7 +63,7 @@ SM_Boolean sm_spinlock_unlock(SM_Spinlock *this)
    if (pthread_spin_unlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }

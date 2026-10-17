@@ -1,5 +1,5 @@
-#include <sm-countdown-latch.h>
 #include <sm-condition-variable.h>
+#include <sm-countdown-latch.h>
 #include <sm-mutex.h>
 
 struct SM_Countdown_Latch {

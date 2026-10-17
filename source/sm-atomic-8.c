@@ -6,7 +6,7 @@ void sm_atomic_8_create(SM_Atomic_8 *this, SM_Signed_8 initial_value)
    InterlockedExchange8(this, (CHAR)initial_value);
 #else
    __atomic_store_n(this, initial_value, __ATOMIC_SEQ_CST);
-#endif
+#endif /* _WIN32 */
 }
 
 void sm_atomic_8_load(SM_Atomic_8 *this, SM_Signed_8 *value)
@@ -15,7 +15,7 @@ void sm_atomic_8_load(SM_Atomic_8 *this, SM_Signed_8 *value)
    *value = (SM_Signed_8)InterlockedCompareExchange8(this, 0, 0);
 #else
    *value = __atomic_load_n(this, __ATOMIC_SEQ_CST);
-#endif
+#endif /* _WIN32 */
 }
 
 void sm_atomic_8_store(SM_Atomic_8 *this, SM_Signed_8 value)
@@ -24,7 +24,7 @@ void sm_atomic_8_store(SM_Atomic_8 *this, SM_Signed_8 value)
    InterlockedExchange8(this, (CHAR)value);
 #else
    __atomic_store_n(this, value, __ATOMIC_SEQ_CST);
-#endif
+#endif /* _WIN32 */
 }
 
 void sm_atomic_8_exchange(SM_Atomic_8 *this, SM_Signed_8 value, SM_Signed_8 *previous_value)
@@ -33,7 +33,7 @@ void sm_atomic_8_exchange(SM_Atomic_8 *this, SM_Signed_8 value, SM_Signed_8 *pre
    *previous_value = (SM_Signed_8)InterlockedExchange8(this, (CHAR)value);
 #else
    *previous_value = __atomic_exchange_n(this, value, __ATOMIC_SEQ_CST);
-#endif
+#endif /* _WIN32 */
 }
 
 SM_Boolean sm_atomic_8_compare_exchange(SM_Atomic_8 *this, SM_Signed_8 *expected_value, SM_Signed_8 desired_value)
@@ -50,7 +50,7 @@ SM_Boolean sm_atomic_8_compare_exchange(SM_Atomic_8 *this, SM_Signed_8 *expected
    if (!__atomic_compare_exchange_n(this, expected_value, desired_value, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -61,5 +61,5 @@ void sm_atomic_8_fetch_add(SM_Atomic_8 *this, SM_Signed_8 value, SM_Signed_8 *pr
    *previous_value = (SM_Signed_8)InterlockedExchangeAdd8(this, (CHAR)value);
 #else
    *previous_value = __atomic_fetch_add(this, value, __ATOMIC_SEQ_CST);
-#endif
+#endif /* _WIN32 */
 }

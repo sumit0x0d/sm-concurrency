@@ -8,7 +8,7 @@ SM_Boolean sm_read_write_lock_create(SM_Read_Write_Lock *this)
    if (pthread_rwlock_init(this, NULL)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -21,7 +21,7 @@ SM_Boolean sm_read_write_lock_destroy(SM_Read_Write_Lock *this)
    if (pthread_rwlock_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -34,7 +34,7 @@ SM_Boolean sm_read_write_lock_read_lock(SM_Read_Write_Lock *this)
    if (pthread_rwlock_rdlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -49,7 +49,7 @@ SM_Boolean sm_read_write_lock_try_read_lock(SM_Read_Write_Lock *this)
    if (pthread_rwlock_tryrdlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -62,7 +62,7 @@ SM_Boolean sm_read_write_lock_read_unlock(SM_Read_Write_Lock *this)
    if (pthread_rwlock_unlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -75,7 +75,7 @@ SM_Boolean sm_read_write_lock_write_lock(SM_Read_Write_Lock *this)
    if (pthread_rwlock_wrlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -90,7 +90,7 @@ SM_Boolean sm_read_write_lock_try_write_lock(SM_Read_Write_Lock *this)
    if (pthread_rwlock_trywrlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
@@ -103,7 +103,7 @@ SM_Boolean sm_read_write_lock_write_unlock(SM_Read_Write_Lock *this)
    if (pthread_rwlock_unlock(this)) {
       return SM_BOOLEAN_FALSE;
    }
-#endif
+#endif /* _WIN32 */
 
    return SM_BOOLEAN_TRUE;
 }
