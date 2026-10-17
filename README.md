@@ -1,1 +1,2 @@
-# Concurrency Primitives (libsm-x)
+# sm-concurrency
+
