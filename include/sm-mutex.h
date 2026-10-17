@@ -13,9 +13,13 @@
 #endif
 
 SM_API SM_Boolean sm_mutex_create(SM_Mutex *this);
+
 SM_API SM_Boolean sm_mutex_destroy(SM_Mutex *this);
+
 SM_API SM_Boolean sm_mutex_lock(SM_Mutex *this);
+
 SM_API SM_Boolean sm_mutex_try_lock(SM_Mutex *this);
+
 SM_API SM_Boolean sm_mutex_unlock(SM_Mutex *this);
 
 #endif

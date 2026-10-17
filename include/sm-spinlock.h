@@ -19,9 +19,13 @@
 #endif
 
 SM_API SM_Boolean sm_spinlock_create(SM_Spinlock *this);
+
 SM_API SM_Boolean sm_spinlock_destroy(SM_Spinlock *this);
+
 SM_API SM_Boolean sm_spinlock_lock(SM_Spinlock *this);
+
 SM_API SM_Boolean sm_spinlock_try_lock(SM_Spinlock *this);
+
 SM_API SM_Boolean sm_spinlock_unlock(SM_Spinlock *this);
 
 #endif

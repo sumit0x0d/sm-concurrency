@@ -19,12 +19,19 @@
 #endif
 
 SM_API SM_Boolean sm_read_write_lock_create(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_destroy(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_read_lock(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_try_read_lock(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_read_unlock(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_write_lock(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_try_write_lock(SM_Read_Write_Lock *this);
+
 SM_API SM_Boolean sm_read_write_lock_write_unlock(SM_Read_Write_Lock *this);
 
 #endif
