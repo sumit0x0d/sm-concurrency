@@ -10,6 +10,8 @@ typedef struct SM_Countdown_Latch {
    SM_Mutex mutex;
    SM_Condition_Variable condition;
    SM_Unsigned_32 count;
+   SM_Unsigned_32 active_waiter_count;
+   SM_Boolean active;
 } SM_Countdown_Latch;
 
 SM_API SM_Boolean sm_countdown_latch_initialize(SM_Countdown_Latch *this, SM_Unsigned_32 count);

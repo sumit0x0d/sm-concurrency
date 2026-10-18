@@ -8,7 +8,7 @@ SM_Boolean sm_thread_local_initialize(SM_Thread_Local *this)
       return SM_BOOLEAN_FALSE;
    }
 #else
-   if (pthread_key_initialize(this, NULL)) {
+   if (pthread_key_create(this, NULL)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

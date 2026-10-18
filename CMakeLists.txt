@@ -148,7 +148,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 
       add_executable(sm-barrier-test test/sm-barrier.c)
       add_test(NAME sm-barrier COMMAND sm-barrier-test)
-      target_link_libraries(sm-barrier-test PRIVATE sm-barrier)
+      target_link_libraries(sm-barrier-test PRIVATE sm-barrier sm-thread)
 
       add_executable(sm-condition-variable-test test/sm-condition-variable.c)
       add_test(NAME sm-condition-variable COMMAND sm-condition-variable-test)

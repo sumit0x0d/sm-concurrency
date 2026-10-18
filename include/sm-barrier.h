@@ -12,6 +12,7 @@ typedef struct SM_Barrier {
    SM_Unsigned_32 participant_count;
    SM_Unsigned_32 waiting_count;
    SM_Unsigned_32 generation;
+   SM_Unsigned_32 active_waiter_count;
    SM_Boolean active;
 } SM_Barrier;
 

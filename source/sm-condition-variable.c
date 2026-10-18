@@ -23,7 +23,7 @@ SM_Boolean sm_condition_variable_deinitialize(SM_Condition_Variable *this)
 #ifdef _WIN32
    (void)this;
 #else
-   if (pthread_cond_deinitialize(this)) {
+   if (pthread_cond_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */
@@ -75,7 +75,7 @@ SM_Boolean sm_condition_variable_wait(SM_Condition_Variable *this, SM_Mutex *mut
 SM_Boolean sm_condition_variable_timed_wait(SM_Condition_Variable *this, SM_Mutex *mutex, SM_Unsigned_32 millisecond)
 {
 #ifdef _WIN32
-   if (!SleepConditionVariableCS(this, mutex, (DWORD)milliseconds)) {
+   if (!SleepConditionVariableCS(this, mutex, (DWORD)millisecond)) {
       if (GetLastError() == ERROR_TIMEOUT) {
          return SM_BOOLEAN_FALSE;
       }
@@ -91,6 +91,7 @@ SM_Boolean sm_condition_variable_timed_wait(SM_Condition_Variable *this, SM_Mute
 
    deadline.tv_sec = now.tv_sec + (time_t)(millisecond / 1000);
    deadline.tv_nsec = now.tv_nsec + (long)(millisecond % 1000) * 1000000L;
+
    if (deadline.tv_nsec >= 1000000000L) {
       deadline.tv_sec += 1;
       deadline.tv_nsec -= 1000000000L;

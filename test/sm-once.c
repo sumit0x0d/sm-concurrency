@@ -16,18 +16,21 @@ static void initialize_once(void)
 static void *call_once(void *argument)
 {
    (void)argument;
-   assert(sm_once(&once, initialize_once) == SM_BOOLEAN_TRUE);
+   assert(sm_once_execute(&once, initialize_once) == SM_BOOLEAN_TRUE);
    return NULL;
 }
 
 int main(void)
 {
    SM_Thread threads[THREAD_COUNT];
+   SM_Callback_Thread callback;
    SM_Unsigned_32 index;
 
    call_count = 0;
+   callback.function = call_once;
+   callback.argument = NULL;
    for (index = 0; index < THREAD_COUNT; index++) {
-      assert(sm_thread_initialize(&threads[index], call_once, NULL) == SM_BOOLEAN_TRUE);
+      assert(sm_thread_initialize(&threads[index], &callback) == SM_BOOLEAN_TRUE);
    }
    for (index = 0; index < THREAD_COUNT; index++) {
       assert(sm_thread_join(&threads[index], NULL) == SM_BOOLEAN_TRUE);

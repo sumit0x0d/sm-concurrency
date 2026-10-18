@@ -20,6 +20,6 @@ typedef pthread_once_t SM_Once;
 
 typedef void (*SM_Once_Function)(void);
 
-SM_API SM_Boolean sm_once(SM_Once *this, SM_Once_Function function);
+SM_API SM_Boolean sm_once_execute(SM_Once *this, SM_Once_Function function);
 
 #endif /* SM_ONCE_H */

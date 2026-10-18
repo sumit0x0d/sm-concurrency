@@ -20,18 +20,23 @@ static void *mark_detached_thread_done(void *argument)
 int main(void)
 {
    SM_Thread thread;
+   SM_Callback_Thread callback;
    void *argument;
    void *result;
    SM_Signed_32 done;
 
    argument = &thread;
    result = NULL;
-   assert(sm_thread_initialize(&thread, return_argument, argument) == SM_BOOLEAN_TRUE);
+   callback.function = return_argument;
+   callback.argument = argument;
+   assert(sm_thread_initialize(&thread, &callback) == SM_BOOLEAN_TRUE);
    assert(sm_thread_join(&thread, &result) == SM_BOOLEAN_TRUE);
    assert(result == argument);
 
    sm_atomic_32_initialize(&detached_thread_done, 0);
-   assert(sm_thread_initialize(&thread, mark_detached_thread_done, NULL) == SM_BOOLEAN_TRUE);
+   callback.function = mark_detached_thread_done;
+   callback.argument = NULL;
+   assert(sm_thread_initialize(&thread, &callback) == SM_BOOLEAN_TRUE);
    assert(sm_thread_detach(&thread) == SM_BOOLEAN_TRUE);
    do {
       sm_atomic_32_load(&detached_thread_done, &done);

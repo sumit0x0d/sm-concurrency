@@ -9,7 +9,7 @@ SM_Boolean sm_semaphore_initialize(SM_Semaphore *this, SM_Unsigned_32 initial_va
       return SM_BOOLEAN_FALSE;
    }
 
-   *this = initializeSemaphore(NULL, (LONG)initial_value, LONG_MAX, NULL);
+   *this = CreateSemaphore(NULL, (LONG)initial_value, LONG_MAX, NULL);
    if (*this == NULL) {
       return SM_BOOLEAN_FALSE;
    }
@@ -29,7 +29,7 @@ SM_Boolean sm_semaphore_deinitialize(SM_Semaphore *this)
       return SM_BOOLEAN_FALSE;
    }
 #else
-   if (sem_deinitialize(this)) {
+   if (sem_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

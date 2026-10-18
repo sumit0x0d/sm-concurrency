@@ -18,7 +18,7 @@ SM_Boolean sm_read_write_lock_deinitialize(SM_Read_Write_Lock *this)
 #ifdef _WIN32
    (void)this;
 #else
-   if (pthread_rwlock_deinitialize(this)) {
+   if (pthread_rwlock_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

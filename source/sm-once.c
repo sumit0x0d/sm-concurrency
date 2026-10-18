@@ -17,7 +17,7 @@ static BOOL CALLBACK sm_once_entry(PINIT_ONCE once, PVOID parameter, PVOID *cont
 }
 #endif /* _WIN32 */
 
-SM_Boolean sm_once(SM_Once *this, SM_Once_Function function)
+SM_Boolean sm_once_execute(SM_Once *this, SM_Once_Function function)
 {
 #ifdef _WIN32
    SM_Once_Context context;

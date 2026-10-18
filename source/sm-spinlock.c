@@ -18,7 +18,7 @@ SM_Boolean sm_spinlock_deinitialize(SM_Spinlock *this)
 #ifdef _WIN32
    (void)this;
 #else
-   if (pthread_spin_deinitialize(this)) {
+   if (pthread_spin_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

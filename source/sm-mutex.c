@@ -20,7 +20,7 @@ SM_Boolean sm_mutex_deinitialize(SM_Mutex *this)
 #ifdef _WIN32
    DeleteCriticalSection(this);
 #else
-   if (pthread_mutex_deinitialize(this)) {
+   if (pthread_mutex_destroy(this)) {
       return SM_BOOLEAN_FALSE;
    }
 #endif /* _WIN32 */

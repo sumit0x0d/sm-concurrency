@@ -1,4 +1,5 @@
 #include <sm-barrier.h>
+#include <sm-thread.h>
 
 #include <assert.h>
 
@@ -23,10 +24,18 @@ static void *wait_at_barrier(void *argument)
    return NULL;
 }
 
+static void *wait_until_barrier_is_closed(void *argument)
+{
+   (void)argument;
+   assert(sm_barrier_wait(&barrier) == SM_BOOLEAN_FALSE);
+   return NULL;
+}
+
 int main(void)
 {
    SM_Test_Thread threads[THREAD_COUNT];
    SM_Unsigned_32 index;
+   SM_Boolean waiter_started;
 
    assert(sm_barrier_initialize(&barrier, 0) == SM_BOOLEAN_FALSE);
    assert(sm_barrier_initialize(&barrier, THREAD_COUNT) == SM_BOOLEAN_TRUE);
@@ -41,6 +50,19 @@ int main(void)
    }
 
    assert(sm_barrier_deinitialize(&barrier) == SM_BOOLEAN_TRUE);
+
+   assert(sm_barrier_initialize(&barrier, 2) == SM_BOOLEAN_TRUE);
+   assert(sm_test_thread_initialize(&threads[0], wait_until_barrier_is_closed, NULL) == SM_BOOLEAN_TRUE);
+   do {
+      assert(sm_mutex_lock(&barrier.mutex) == SM_BOOLEAN_TRUE);
+      waiter_started = (barrier.waiting_count != 0);
+      assert(sm_mutex_unlock(&barrier.mutex) == SM_BOOLEAN_TRUE);
+      if (!waiter_started) {
+         assert(sm_thread_sleep(1) == SM_BOOLEAN_TRUE);
+      }
+   } while (!waiter_started);
+   assert(sm_barrier_deinitialize(&barrier) == SM_BOOLEAN_TRUE);
+   assert(sm_test_thread_join(&threads[0]) == SM_BOOLEAN_TRUE);
 
    return 0;
 }

@@ -10,6 +10,8 @@ typedef struct SM_Event {
    SM_Mutex mutex;
    SM_Condition_Variable condition;
    SM_Boolean signaled;
+   SM_Unsigned_32 active_waiter_count;
+   SM_Boolean active;
 } SM_Event;
 
 SM_API SM_Boolean sm_event_initialize(SM_Event *this, SM_Boolean initially_signaled);
