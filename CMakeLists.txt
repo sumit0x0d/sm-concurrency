@@ -130,63 +130,63 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
          add_compile_options(-UNDEBUG)
       endif()
 
-      add_executable(sm-atomic-8-test test/sm-atomic-8.c)
+      add_executable(sm-atomic-8-test test/sm-atomic-8-test.c)
       add_test(NAME sm-atomic-8 COMMAND sm-atomic-8-test)
       target_link_libraries(sm-atomic-8-test PRIVATE sm-atomic-8)
 
-      add_executable(sm-atomic-16-test test/sm-atomic-16.c)
+      add_executable(sm-atomic-16-test test/sm-atomic-16-test.c)
       add_test(NAME sm-atomic-16 COMMAND sm-atomic-16-test)
       target_link_libraries(sm-atomic-16-test PRIVATE sm-atomic-16)
 
-      add_executable(sm-atomic-32-test test/sm-atomic-32.c)
+      add_executable(sm-atomic-32-test test/sm-atomic-32-test.c)
       add_test(NAME sm-atomic-32 COMMAND sm-atomic-32-test)
       target_link_libraries(sm-atomic-32-test PRIVATE sm-atomic-32)
 
-      add_executable(sm-atomic-64-test test/sm-atomic-64.c)
+      add_executable(sm-atomic-64-test test/sm-atomic-64-test.c)
       add_test(NAME sm-atomic-64 COMMAND sm-atomic-64-test)
       target_link_libraries(sm-atomic-64-test PRIVATE sm-atomic-64)
 
-      add_executable(sm-barrier-test test/sm-barrier.c)
+      add_executable(sm-barrier-test test/sm-barrier-test.c)
       add_test(NAME sm-barrier COMMAND sm-barrier-test)
       target_link_libraries(sm-barrier-test PRIVATE sm-barrier sm-thread)
 
-      add_executable(sm-condition-variable-test test/sm-condition-variable.c)
+      add_executable(sm-condition-variable-test test/sm-condition-variable-test.c)
       add_test(NAME sm-condition-variable COMMAND sm-condition-variable-test)
       target_link_libraries(sm-condition-variable-test PRIVATE sm-condition-variable sm-mutex sm-thread)
 
-      add_executable(sm-countdown-latch-test test/sm-countdown-latch.c)
+      add_executable(sm-countdown-latch-test test/sm-countdown-latch-test.c)
       add_test(NAME sm-countdown-latch COMMAND sm-countdown-latch-test)
       target_link_libraries(sm-countdown-latch-test PRIVATE sm-countdown-latch sm-thread)
 
-      add_executable(sm-event-test test/sm-event.c)
+      add_executable(sm-event-test test/sm-event-test.c)
       add_test(NAME sm-event COMMAND sm-event-test)
       target_link_libraries(sm-event-test PRIVATE sm-event sm-thread)
 
-      add_executable(sm-mutex-test test/sm-mutex.c)
+      add_executable(sm-mutex-test test/sm-mutex-test.c)
       add_test(NAME sm-mutex COMMAND sm-mutex-test)
       target_link_libraries(sm-mutex-test PRIVATE sm-mutex)
 
-      add_executable(sm-once-test test/sm-once.c)
+      add_executable(sm-once-test test/sm-once-test.c)
       add_test(NAME sm-once COMMAND sm-once-test)
       target_link_libraries(sm-once-test PRIVATE sm-once sm-thread)
 
-      add_executable(sm-read-write-lock-test test/sm-read-write-lock.c)
+      add_executable(sm-read-write-lock-test test/sm-read-write-lock-test.c)
       add_test(NAME sm-read-write-lock COMMAND sm-read-write-lock-test)
       target_link_libraries(sm-read-write-lock-test PRIVATE sm-read-write-lock)
 
-      add_executable(sm-semaphore-test test/sm-semaphore.c)
+      add_executable(sm-semaphore-test test/sm-semaphore-test.c)
       add_test(NAME sm-semaphore COMMAND sm-semaphore-test)
       target_link_libraries(sm-semaphore-test PRIVATE sm-semaphore)
 
-      add_executable(sm-spinlock-test test/sm-spinlock.c)
+      add_executable(sm-spinlock-test test/sm-spinlock-test.c)
       add_test(NAME sm-spinlock COMMAND sm-spinlock-test)
       target_link_libraries(sm-spinlock-test PRIVATE sm-spinlock)
 
-      add_executable(sm-thread-test test/sm-thread.c)
+      add_executable(sm-thread-test test/sm-thread-test.c)
       add_test(NAME sm-thread COMMAND sm-thread-test)
       target_link_libraries(sm-thread-test PRIVATE sm-thread sm-atomic-32)
 
-      add_executable(sm-thread-local-test test/sm-thread-local.c)
+      add_executable(sm-thread-local-test test/sm-thread-local-test.c)
       add_test(NAME sm-thread-local COMMAND sm-thread-local-test)
       target_link_libraries(sm-thread-local-test PRIVATE sm-thread-local sm-thread)
    endif()
